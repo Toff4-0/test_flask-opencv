@@ -4,6 +4,7 @@ from flask import Flask, render_template, Response
 import imutils
 import time
 import cv2
+import json
 
 
 app = Flask(__name__)
@@ -23,11 +24,18 @@ def video_feed():
         while True:
             frame = video_stream.read()
             output_frame = imutils.resize(frame, width=400)
+            output_frame = cv2.flip(output_frame, 1)
             # encode the frame in JPEG format
             (flag, encoded_image) = cv2.imencode(".jpg", output_frame)
             yield (b'--frame\r\n' b'Content-Type: image/jpeg\r\n\r\n' + bytearray(encoded_image) + b'\r\n')
 
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/click_data/<string:data>', methods=['POST'])
+def ProcessClicData(data):
+    coord = [ int(x) for x in data.split(',') ]
+    print(coord)
+    return('/')
+    
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=False)

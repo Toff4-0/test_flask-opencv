@@ -1,14 +1,5 @@
-# USAGE
-# python webstreaming.py --ip 0.0.0.0 --port 8000
-
-# ------------------------
-#   IMPORTS
-# ------------------------
-#from .py_image_search.motion_detection.singlemotiondetection import SingleMotionDetector
 from imutils.video import VideoStream
-from flask import Response
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, Response
 import threading
 import imutils
 import time

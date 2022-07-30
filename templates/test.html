@@ -5,5 +5,20 @@
   <body>
     <h1>Video Streaming Demonstration</h1>
     <img src="{{ url_for('video_feed') }}">
+
+    <script>
+        
+      const img = document.querySelector("img")
+          img.onclick = (e) => {
+          const x = e.pageX - e.target.offsetLeft;
+          const y = e.pageY - e.target.offsetTop;
+          console.log(x, y);
+          
+          const request = new XMLHttpRequest();
+          request.open('POST', "/click_data/" + x + "," + y);
+          request.send();
+          }
+  </script>
+
   </body>
 </html>
