@@ -18,7 +18,7 @@ point2 = []
         
 @app.route('/')
 def index():
-    return render_template('test.html', point1=point1,point2=point2)
+    return render_template('test.html')
 
 
 
@@ -29,8 +29,8 @@ def video_feed():
             frame = video_stream.read()
             output_frame = imutils.resize(frame, width=400)
             output_frame = cv2.flip(output_frame, 1)
-            # draw points if selected
             
+            # draw selected points
             if len(point1) == 2:
                 cv2.circle(output_frame, (point1[0],point1[1]), radius= (2), color=(0,0,255), thickness= 3)
                 
@@ -49,31 +49,23 @@ def video_feed():
 
     return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
 @app.route('/click_data/<string:data>', methods=['POST'])
 def ProcessClicData(data):
     global point1, point2
     if (len(point1) == 2 & len(point2) == 2):
         point1 = []
         point2 = []
-        print("raz P1, P2")
         
     elif len(point1) == 2:
-        point2 = [ int(x) for x in data.split(',') ]
-        print("P2")
-        print(point2)   
+        point2 = [ int(x) for x in data.split(',') ]   
     
     else:
-        point1 = [ int(x) for x in data.split(',') ]   
-        point2 = [] 
-        print("P1: ")
-        print(point1)
+        point1 = [ int(x) for x in data.split(',') ]       
         
     return render_template('test.html') 
    
-@app.context_processor
-def context_processor():
-    global point1, point2
-    return dict(point1=str(point1), point2=str(point2))
+
 
 
     
