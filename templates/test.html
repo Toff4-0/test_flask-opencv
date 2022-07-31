@@ -5,7 +5,8 @@
   <body>
     <h1>Video Streaming Demonstration</h1>
     <img src="{{ url_for('video_feed') }}">
-
+    
+    
     <script>
         
       const img = document.querySelector("img")
@@ -18,7 +19,12 @@
           request.open('POST', "/click_data/" + x + "," + y);
           request.send();
           }
-  </script>
+    </script>
+    
+
+
+
+
 
   </body>
 </html>
